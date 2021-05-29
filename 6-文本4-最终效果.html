@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+
+	<link rel="stylesheet" type="text/css" href="svg270/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="svg270/themes/icon.css">
+	<script type="text/javascript" src="svg270/jquery.min.js"></script>
+	<script type="text/javascript" src="svg270/jquery.easyui.min.js"></script>
+
+
+	<script src="svg270/svg.min.js"></script>
+
+	<script src="svg270/svg.panzoom.js"></script>
+	<script src="svg270/svg.draggable.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="svg270/svg.select.css">
+	<script src="svg270/svg.select.js"></script>
+	<script src="svg270/svg.resize.js"></script>
+
+</head>
+<style>
+	ul li{
+		margin-bottom: 20px;
+		cursor: pointer;
+	}	
+	/*高亮效果*/
+	.highlight{
+		stroke:#1470FA;
+	}
+	
+</style>
+
+<!-- 
+
+-->
+<body>
+	<div style="margin-right: 50px;">
+		<input id="id-text" class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px"> 
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"   onclick="changeText()">changeText</a> 
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"   onclick="clearText()">clearText</a> 
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"   onclick="changeColor()">changeColor</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"   onclick="changeSize()">changeSize</a>
+
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"   onclick="loadLegend()">loadLegend</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"   onclick="newText()">newText</a>
+		<br />
+		<input id="id-x" class="easyui-numberbox" data-options="iconCls:'icon-search'" style="width:100px"> 
+		<input id="id-y" class="easyui-numberbox" data-options="iconCls:'icon-search'" style="width:100px"> 
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"   onclick="moveText()">moveText</a>
+
+
+
+	</div>
+	
+	<div style="">
+		<div style="border-bottom: 1px solid gray;">我是一个画布视窗</div>
+		<div id="drawing" style="border:2px solid green;width: 800px;height: 600px;">
+			
+		</div>
+	
+	</div>
+	
+
+
+</body>
+
+<script>
+
+/**
+ * 针对文字的操作和交互，都写了测试用例
+ */ 
+var draw = SVG('drawing').size("100%", "100%");
+// pan and zoom
+draw.panZoom({zoomMin: 0.1, zoomMax: 10,zoomFactor:0.1});
+
+//创建虚线线型 这是对比图形
+
+//将填充色 设为白色，同时将 透明度设为 0，可以在没有颜色的同时，实现拖动
+var circle = draw.circle(100).style("stroke","#f43").style("fill","#fff").style("fill-opacity",0).style("stroke-width","0.5mm");
+// console.log(circle.transform());
+// var tem = circle.style();
+// console.log(typeof circle.style());
+
+
+var currentText = draw.text("aaa").move(100,100);
+
+// baseline | 
+//before-edge | text-before-edge |
+// middle | central | after-edge |
+// text-after-edge | ideographic | alphabetic | hanging | mathematical | inherit
+var t1 = draw.text("").plain("bbb");
+t1.attr("dominant-baseline","text-before-edge");
+t1.move(100,200);
+var t2 = draw.text("").plain("ccc");
+t2.attr("dominant-baseline","text-before-edge");
+t2.move(100,250);
+
+/**
+ * 涂改文字
+ */
+function changeText(){
+	var v = $("#id-text").textbox("getValue");
+	// alert(v);
+	currentText.text(v);
+}
+
+/**
+ * 清空文字
+ */ 
+function clearText(){
+	currentText.clear();
+}
+/**
+ * 变色
+ */ 
+function changeColor(){
+	currentText.style("fill",getRandomColor());
+}
+
+function changeSize(){
+	var a = Math.floor(Math.random()*100);
+	currentText.font("size",a);
+}
+
+/**
+ * 加载图例
+ */
+function loadLegendByUrl(url,callback){
+
+
+	$.post(url, {}, function (data) {	
+
+		if($.isFunction(callback)){
+			callback(data);
+		}
+	}, "text");
+}
+
+function createUUID(){
+	var x= 13*Math.floor(Math.random()*1000)+"-"+7*Math.floor(Math.random()*100);  
+	return "id_"+x;
+}
+/**
+ * 生成随机颜色
+ */
+function getRandomColor(){
+	var x= getRandomInteger();  
+	return "#"+x;
+}
+/**
+ * 生成随机数
+ */ 
+function getRandomInteger(){
+	var x= Math.floor(Math.random()*9)+""+Math.floor(Math.random()*9)+""+Math.floor(Math.random()*9);  
+	return x;
+}
+</script>
+
+</html>
