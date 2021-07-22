@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="29.633333mm"
+   height="29.633333mm"
+   viewBox="0 0 112 112"
+   version="1.1"
+   id="svg74"
+   sodipodi:docname="两相分离器.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata78">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>两相分离器</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1680"
+     inkscape:window-height="988"
+     id="namedview76"
+     showgrid="false"
+     inkscape:document-units="mm"
+     inkscape:zoom="4.7491379"
+     inkscape:cx="56"
+     inkscape:cy="56"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg74"
+     inkscape:document-rotation="0"
+     units="mm" />
+  <title
+     id="title2">两相分离器</title>
+  <defs
+     id="defs50">
+    <linearGradient
+       x1="36.147846"
+       y1="118.82249"
+       x2="36.147846"
+       y2="46.288624"
+       id="linearGradient-1a1"
+       gradientTransform="scale(1.5491933,0.64549722)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#686868"
+         offset="0%"
+         id="stop4" />
+      <stop
+         stop-color="#E9E9E9"
+         offset="41.1804751%"
+         id="stop6" />
+      <stop
+         stop-color="#737373"
+         offset="100%"
+         id="stop8" />
+    </linearGradient>
+    <linearGradient
+       x1="36.147846"
+       y1="63.516926"
+       x2="36.147846"
+       y2="92.64727"
+       id="linearGradient-2a2"
+       gradientTransform="scale(1.5491933,0.64549722)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#000000"
+         stop-opacity="0.5"
+         offset="0%"
+         id="stop11" />
+      <stop
+         stop-color="#FFFFFF"
+         stop-opacity="0"
+         offset="100%"
+         id="stop13" />
+    </linearGradient>
+    <linearGradient
+       x1="12.909944"
+       y1="88.364449"
+       x2="54.591488"
+       y2="88.50531"
+       id="linearGradient-3a2"
+       gradientTransform="scale(1.5491933,0.64549722)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#777777"
+         offset="0%"
+         id="stop16" />
+      <stop
+         stop-color="#F2F2F2"
+         offset="49.3309181%"
+         id="stop18" />
+      <stop
+         stop-color="#777777"
+         offset="100%"
+         id="stop20" />
+    </linearGradient>
+    <polygon
+       id="path-4b1"
+       points="92,41 92,71 20,71 20,41 " />
+    <linearGradient
+       x1="31.752165"
+       y1="38.281483"
+       x2="18.335756"
+       y2="38.281483"
+       id="linearGradient-5a2"
+       gradientTransform="scale(2.236068,0.4472136)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#737373"
+         offset="0%"
+         id="stop24" />
+      <stop
+         stop-color="#E9E9E9"
+         offset="44.7942088%"
+         id="stop26" />
+      <stop
+         stop-color="#737373"
+         offset="100%"
+         id="stop28" />
+    </linearGradient>
+    <linearGradient
+       x1="25.043961"
+       y1="31.522806"
+       x2="25.043961"
+       y2="42.641682"
+       id="linearGradient-6a2"
+       gradientTransform="scale(2.236068,0.4472136)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#000000"
+         stop-opacity="0.5"
+         offset="0%"
+         id="stop31" />
+      <stop
+         stop-color="#FFFFFF"
+         stop-opacity="0"
+         offset="100%"
+         id="stop33" />
+    </linearGradient>
+    <path
+       d="m 56,14 c 8.284271,0 15,2.686291 15,6 v -6.5e-5 H 41 l 0.0049,-0.154798 C 41.21025,16.603001 47.845171,14 56,14 Z"
+       id="path-7b1" />
+    <linearGradient
+       x1="31.752165"
+       y1="219.13466"
+       x2="18.335756"
+       y2="219.13466"
+       id="linearGradient-8a2"
+       gradientTransform="scale(2.236068,0.4472136)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#686868"
+         offset="0%"
+         id="stop37" />
+      <stop
+         stop-color="#E9E9E9"
+         offset="56.1342064%"
+         id="stop39" />
+      <stop
+         stop-color="#737373"
+         offset="100%"
+         id="stop41" />
+    </linearGradient>
+    <linearGradient
+       x1="25.043961"
+       y1="205.71825"
+       x2="25.043961"
+       y2="216.7328"
+       id="linearGradient-9a2"
+       gradientTransform="scale(2.236068,0.4472136)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#000000"
+         stop-opacity="0.5"
+         offset="0%"
+         id="stop44" />
+      <stop
+         stop-color="#FFFFFF"
+         stop-opacity="0"
+         offset="100%"
+         id="stop46" />
+    </linearGradient>
+    <path
+       d="m 56,92 c 8.284271,0 15,2.686291 15,6 v 0 H 41 l 0.0049,-0.154863 C 41.21025,94.603001 47.845171,92 56,92 Z"
+       id="path-10b1a1" />
+  </defs>
+  <g
+     id="g954">
+    <g
+       id="罐身"
+       transform="rotate(-90,56,56)"
+       style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1">
+      <use
+         fill="url(#linearGradient-1a1)"
+         xlink:href="#path-4b1"
+         id="use53"
+         style="fill:url(#linearGradient-1a1)"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <path
+         stroke="url(#linearGradient-3a2)"
+         stroke-width="0.2"
+         d="M 91.9,41.1 V 70.9 H 20.1 V 41.1 Z"
+         stroke-linejoin="square"
+         fill="url(#linearGradient-2a2)"
+         id="path55"
+         style="fill:url(#linearGradient-2a2);stroke:url(#linearGradient-3a2)" />
+    </g>
+    <g
+       id="下盖"
+       style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1">
+      <use
+         fill="url(#linearGradient-5a2)"
+         xlink:href="#path-7b1"
+         id="use58"
+         style="fill:url(#linearGradient-5a2)"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="url(#linearGradient-6a2)"
+         xlink:href="#path-7b1"
+         id="use60"
+         style="fill:url(#linearGradient-6a2)"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       id="上盖"
+       transform="rotate(180,56,95)"
+       style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1">
+      <use
+         fill="url(#linearGradient-8a2)"
+         xlink:href="#path-10b1a1"
+         id="use63"
+         style="fill:url(#linearGradient-8a2)"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="url(#linearGradient-9a2)"
+         xlink:href="#path-10b1a1"
+         id="use65"
+         style="fill:url(#linearGradient-9a2)"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+  </g>
+  <path
+     d="M 37.450214,53 41,56 37.450214,59 36.793594,58.20091 38.781,56.52 29,56.520091 V 55.479909 L 38.78,55.479 36.793594,53.79909 Z"
+     id="连接点1"
+     fill-opacity="0.05"
+     fill="#ffffff"
+     style="fill-rule:evenodd;stroke:none;stroke-width:1" />
+  <path
+     d="M 53,5.549786 56,2 59,5.549786 58.20091,6.206406 56.52,4.219 56.520091,14 H 55.479909 L 55.479,4.22 53.79909,6.206406 Z"
+     id="连接点2"
+     fill-opacity="0.05"
+     fill="#ffffff"
+     style="fill-rule:evenodd;stroke:none;stroke-width:1" />
+  <path
+     d="M 59,106.45021 56,110 53,106.45021 53.79909,105.79359 55.48,107.781 55.47991,98 h 1.04018 l 9.1e-4,9.78 1.67991,-1.98641 z"
+     id="连接点3"
+     fill-opacity="0.05"
+     fill="#ffffff"
+     style="fill-rule:evenodd;stroke:none;stroke-width:1" />
+</svg>
