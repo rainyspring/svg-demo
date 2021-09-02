@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+
+	<link rel="stylesheet" type="text/css" href="svg270/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="svg270/themes/icon.css">
+	<script type="text/javascript" src="svg270/jquery.min.js"></script>
+	<script type="text/javascript" src="svg270/jquery.easyui.min.js"></script>
+
+
+	<script src="svg270/svg.min.js"></script>
+
+	<script src="svg270/svg.panzoom.js"></script>
+	<script src="svg270/svg.draggable.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="svg270/svg.select.css">
+	<script src="svg270/svg.select.js"></script>
+	<script src="svg270/svg.resize.js"></script>
+
+</head>
+<style>
+	
+</style>
+
+<!-- 
+
+-->
+
+<body>
+	
+	<div>
+		<div style="">我是一个画布视窗</div>
+	
+		<div id="drawing" style="border:1px solid green;width: 800px;height: 600px;">
+		</div>
+	</div>
+
+
+
+</body>
+
+<script>
+
+var draw = SVG('drawing');
+
+var g = draw.group();
+
+let y = 100;
+
+//blue
+var r1 = draw.line(0, y,100,y).style({"fill":"#0000FF"}).stroke({ width: 1 });
+
+
+//red
+//var r2 = draw.line(100,y,150,y).style({"fill":"#ff0000","stroke-width":"1","stroke":"black"})
+
+
+//green
+var r3 = draw.line(150,y,300,y).style({"fill":"#00ff90","stroke-width":"1","stroke":"black"})
+
+g.add(r1)
+//g.add(r2)
+g.add(r3)
+let box = g.rbox(draw);
+console.log("box>>",box)
+/**
+ * 加载图例
+ */
+function loadLegendByUrl(url, callback) {
+
+
+	$.post(url, {}, function (data) {
+
+		if ($.isFunction(callback)) {
+			callback(data);
+		}
+	}, "text");
+}
+
+function createUUID() {
+	var x = 13 * Math.floor(Math.random() * 1000) + "-" + 7 * Math.floor(Math.random() * 100);
+	return "id_" + x;
+}
+/**
+ * 生成随机颜色
+ */
+function getRandomColor() {
+	var x = getRandomInteger();
+	return "#" + x;
+}
+/**
+ * 生成随机数
+ */
+function getRandomInteger() {
+	var x = Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9);
+	return x;
+}
+</script>
+
+</html>

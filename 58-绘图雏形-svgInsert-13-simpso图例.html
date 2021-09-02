@@ -583,22 +583,9 @@ function loadAllLegends(){
 function bindNewLegend(x,y,zoom){
 
 	var g = SVG.get("demo").attr("id",createUUID());
-
-	// console.log("--")
-
-	if("pl"===g.attr("legendtype")){
-
-		newPipeline(g,x,y,zoom);
-		return;
-	}
-
-	var group = SVG.get("layer1").attr("id",createUUID());
-
-	// console.log(group.svg());
-
-	//由于由底色，图例可以按住任意点拖拽，很方便，故为图例加个底色，将透明度变为0，这样看着和没底色差不多。
-	group.attr("fill","#fff").attr("fill-opacity",0);
 	
+	console.log(">>",g)
+
 	
 	// console.log(x);
 
