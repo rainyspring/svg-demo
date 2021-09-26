@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+
+	<link rel="stylesheet" type="text/css" href="svg270/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="svg270/themes/icon.css">
+	<script type="text/javascript" src="svg270/jquery.min.js"></script>
+	<script type="text/javascript" src="svg270/jquery.easyui.min.js"></script>
+
+
+	<script src="svg270/svg.min.js"></script>
+
+	<script src="svg270/svg.panzoom.js"></script>
+	<script src="svg270/svg.draggable.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="svg270/svg.select.css">
+	<script src="svg270/svg.select.js"></script>
+	<script src="svg270/svg.resize.js"></script>
+
+</head>
+<style>
+	
+</style>
+
+<!-- 
+
+-->
+
+<body>
+	
+	<div>
+		<div style="border-bottom: 1px solid gray;">我是一个画布视窗</div>
+	
+		<div id="drawing" style="border:2px solid green;width: 800px;height: 600px;">
+		</div>
+	</div>
+
+
+
+</body>
+
+<script>
+
+var draw = SVG('drawing');
+
+var g1 = draw.group().addClass("layer1");
+var g2 = draw.group().addClass("layer2");
+var g3 = draw.group().addClass("layer3");
+
+
+
+//red
+var r1 = draw.rect(100, 100).dmove(50,50).style({"fill":"#ff0000"});
+g1.add(r1);
+
+//green
+var r2 = draw.rect(100, 100).style({"fill":"#00ff00","stroke-width":"0.5mm"});
+g2.add(r2);
+
+//blue
+var r31 = draw.rect(100, 100).dmove(70,20).style({"fill":"#0000ff","stroke-width":"0.5mm"});
+//light blue
+var r32 = draw.rect(100, 100).dmove(80,10).style({"fill":"#9586F9","stroke-width":"0.5mm"});
+
+g3.add(r32);
+g3.add(r31);
+//放置最底部
+//r31.back();
+//放置最上部
+//r1.front();
+
+/**
+ * 加载图例
+ */
+function loadLegendByUrl(url, callback) {
+
+
+	$.post(url, {}, function (data) {
+
+		if ($.isFunction(callback)) {
+			callback(data);
+		}
+	}, "text");
+}
+
+function createUUID() {
+	var x = 13 * Math.floor(Math.random() * 1000) + "-" + 7 * Math.floor(Math.random() * 100);
+	return "id_" + x;
+}
+/**
+ * 生成随机颜色
+ */
+function getRandomColor() {
+	var x = getRandomInteger();
+	return "#" + x;
+}
+/**
+ * 生成随机数
+ */
+function getRandomInteger() {
+	var x = Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9);
+	return x;
+}
+</script>
+
+</html>

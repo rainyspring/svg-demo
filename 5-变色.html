@@ -80,10 +80,11 @@ draw.panZoom({zoomMin: 0.1, zoomMax: 10,zoomFactor:0.1});
 draw.line(0, 0, 100, 150).stroke({ width: "0.5mm" }).attr("stroke-dasharray","10,10");
 
 //将填充色 设为白色，同时将 透明度设为 0，可以在没有颜色的同时，实现拖动
-var circle = draw.circle(100).style("stroke","#f43").style("fill","#fff").style("fill-opacity",0).style("stroke-width","0.5mm");
+var circle = draw.circle(100).style("stroke","#f43").style("fill","none").style("fill-opacity",0).style("stroke-width","0.5mm");
 // console.log(circle.transform());
 var tem = circle.style();
-console.log(typeof circle.style());
+console.log(typeof circle.style("fill"));
+console.log(circle.style("fill"));
 
 
 
