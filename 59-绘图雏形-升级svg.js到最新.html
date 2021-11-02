@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+
+	<link rel="stylesheet" type="text/css" href="svg270/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="svg270/themes/icon.css">
+	<script type="text/javascript" src="svg270/jquery.min.js"></script>
+	<script type="text/javascript" src="svg270/jquery.easyui.min.js"></script>
+
+
+	<script src="svg311/npm/node_modules/@svgdotjs/svg.js/dist/svg.js"></script>
+
+	<script src="svg311/npm/node_modules/@svgdotjs/svg.panzoom.js/dist/svg.panzoom.js"></script>
+	<script src="svg311/npm/node_modules/@svgdotjs/svg.draggable.js/dist/svg.draggable.js"></script>
+
+</head>
+<style>
+	ul li{
+		margin-bottom: 20px;
+		cursor: pointer;
+	}
+	
+	/*高亮效果*/
+	.highlight{
+		stroke:#1470FA;
+	}
+	
+	
+</style>
+
+<body>
+	
+	
+	<div style="float:left;">
+		<div id="drawing" style="border:2px solid green;width: 800px;height: 600px;">
+			<rect width="100" height="100" fill="#f06"></rect>
+		</div>
+	
+	</div>
+	
+	<div style="float: left;margin-left: 10px;">
+			<a href="#">我是图例库</a>
+			<div style="width:100px;height:500px;border:1px solid green;">
+				<ul id="legend-list">
+
+					<li value="legend10/1.svg" draggable="true">1.svg</li>
+					<li value="legend10/2.svg" draggable="true">2.svg</li>
+					<li value="legend10/3.svg" draggable="true">3.svg</li>
+					<li value="legend10/4.svg" draggable="true">4.svg</li>
+	
+				</ul>
+			</div>
+	</div>
+
+	
+</body>
+
+<script>
+
+/**
+ * 全局参数
+*/
+var currentDragLegendText = null;
+// var highColor = "#1470FA";
+var defaultColor = "#000";
+
+
+
+// var draw = SVG('drawing').size("1000", "700");
+//var draw = SVG('drawing').size("100%", "100%");
+// var draw =  SVG().addTo('#drawing').size("100%", "100%");
+var draw =  SVG().addTo('#drawing').size("100%", "100%");
+
+
+init(draw);
+
+//初始化 所有图例列表
+//loadAllLegends();
+
+
+function init(draw){
+// pan and zoom
+	draw.panZoom();
+	
+//draw.panZoom({zoomMin: 0.1, zoomMax: 10,zoomFactor:2});
+
+
+	
+	/**
+	 * 整个画布的点击事件
+	 */ 
+	 draw.click(function(e){
+		var x = e.offsetX;
+		var y = e.offsetY;
+		
+
+		// drawingPipeline(x,y);
+		//必须经过坐标转换，转换为 vbox 内坐标
+		var box = transformFrom(x,y);
+		//console.log(box.x+"--"+box.y);
+
+	
+		
+	})
+
+
+
+
+	// imgArea.draggable();
+
+	//创建虚线线型 这是 仪表线的 线型
+	//参考 https://www.runoob.com/svg/svg-stroke.html
+	draw.line(0, 0, 100, 150).stroke({ width: "0.5mm" }).attr("stroke-dasharray","10,10");
+
+	//将填充色 设为白色，同时将 透明度设为 0，可以在没有颜色的同时，实现拖动
+	var circle = draw.circle(100).css("stroke","#f43").css("fill","#ffff00").css("stroke-width","0.5mm");
+	//console.log(circle.transform());
+	circle.draggable();
+
+
+}
+
+
+/**
+ * 加载图例
+ */
+function loadAllLegends(){
+	//加载图框
+	loadLegendByUrl("./svg270/legend2/A1（横）图框+图签（SEI）修改mm.svg",function(text){
+		draw.svg(text);
+		var a = SVG("#demo").attr("id",createUUID());
+
+
+	})
+
+	$("#legend-list li").each(function(){
+
+		var _this = this;
+		var v = $(this).attr("value");
+		if(v=="#"){
+			return;
+		}
+
+
+		var url = "./svg270/"+v;
+
+		loadLegendByUrl(url,function(text){
+			// console.log(text);
+			$(_this).data("svgData",text);
+		})
+		
+		//点击右侧的图例列表
+		$(this).click(function(){
+			// var v= $(_this).data("svgData");
+			// console.log(v);
+		})
+		//拖拽时，离开容器范围时触发
+		$(this).on("dragstart",function(e){
+			var text= $(_this).data("svgData");
+			currentDragLegendText = text;
+		}).on("dragover",function(e){
+			return false;
+		})
+		
+	})
+
+	//放置图例时的触发事件
+	//svg 元素不支持 拖拽的所有事件
+	$("#drawing").on("drop",function(e){
+		var x = e.offsetX;
+		var y = e.offsetY;
+
+		if(!currentDragLegendText){
+			return;
+		}
+		// console.log(currentDragLegendText);
+		draw.svg(currentDragLegendText);
+	
+		//将外部坐标转换为内部 vbox坐标系
+		var box = transformFrom(x,y);
+
+		//求解 图例在 vbox 内的中心坐标
+		// console.log(box);
+
+		bindNewLegend(box.x,box.y,box.zoom);
+
+		
+	}).on("dragover",function(e){
+		return false;
+	})
+
+
+	
+}
+
+
+/**
+ * 为新的图例绑定事件
+ */ 
+function bindNewLegend(x,y,zoom){
+
+	var g = SVG("#demo").attr("id",createUUID());
+	
+	console.log(">>",g)
+
+	
+	// console.log(x);
+
+	// 将图例移动到鼠标位置
+	// g.translate(x,y);
+	g.move(x,y);
+
+	//将图例缩放程度和底图的缩放保持一致
+	// g.scale(zoom,x,y);
+
+	//记录血的教训：必须指定 fill 颜色;不然 fill=none 时 ，移动时必须选中边框才能移动
+	g.draggable();
+
+	
+	//加入统一的定位信息
+	g.addClass("lengendObject");	
+	
+	
+
+}
+
+
+/**
+ * 坐标转换公式
+ * from (x,y)-> vbox(x,y)
+ */ 
+ function transformFrom(x,y){
+	//将外部坐标转换为内部 vbox坐标系
+	var box = draw.viewbox();
+	// console.log(box);
+	var width4Client = $("#drawing").width();
+	var height4Client = $("#drawing").height();
+	
+	//计算图例在 vbox 中的真实坐标
+	var x4Vbox = (box.width/width4Client)*x+box.x;
+	var y4Vbox = (box.height/height4Client)*y+box.y;
+	//计算图例在 vbox 中的缩放比例
+	var zoom = box.zoom;
+
+	return {x:x4Vbox,y:y4Vbox,zoom:zoom}
+
+}
+
+
+function highlight(group){
+
+
+
+	var selectedGroup = group.find("g");
+
+	//高亮
+	// selectedGroup.attr("stroke",highColor);
+	selectedGroup.addClass("highlight");
+	//加入 class 标志	
+	group.addClass("selectedObject");
+
+
+}
+
+/**
+ * 提示信息
+ */ 
+function tip(msg){
+	$.messager.show({
+		title:'我的消息',
+		msg:msg,
+		timeout:5000,
+		showType:'slide'
+	});
+
+}
+/**
+ * 取消高亮
+ */ 
+function unselectAllGroup(){
+
+	var elements = SVG('.lengendObject');
+	
+	//移除图例的高亮
+	// draw.select('.lengendObject g').attr("stroke",defaultColor);
+	SVG('.lengendObject g').removeClass("highlight");
+
+	//移除管线的高亮
+	elements.removeClass("highlight");
+
+		// elements.selectize(false);
+		// return elements.resize('stop');
+	elements.removeClass("selectedObject");
+}
+
+/**
+ * 加载图例
+ */
+function loadLegendByUrl(url,callback){
+
+
+	$.post(url, {}, function (data) {	
+
+		if($.isFunction(callback)){
+			callback(data);
+		}
+	}, "text");
+}
+
+function createUUID(){
+	var x= 13*Math.floor(Math.random()*1000)+"-"+7*Math.floor(Math.random()*100);  
+	return "id_"+x;
+}
+/**
+ * 生成随机颜色
+ */
+function getRandomColor(){
+	var x= Math.floor(Math.random()*9)+""+Math.floor(Math.random()*9)+""+Math.floor(Math.random()*9);  
+	return "#"+x;
+}
+</script>
+
+</html>
