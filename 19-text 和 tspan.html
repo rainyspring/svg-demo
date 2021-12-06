@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+
+	<link rel="stylesheet" type="text/css" href="svg270/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="svg270/themes/icon.css">
+	<script type="text/javascript" src="svg270/jquery.min.js"></script>
+	<script type="text/javascript" src="svg270/jquery.easyui.min.js"></script>
+
+
+	<!--高版本-->
+	<script src="svg311/node_modules/@svgdotjs/svg.js/dist/svg.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.panzoom.js/dist/svg.panzoom.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.draggable.js/dist/svg.draggable.js"></script>
+
+
+
+</head>
+<style>
+	
+</style>
+
+<!-- 
+
+-->
+
+<body>
+	
+	<div id="drawing" style="border:2px solid green;width: 800px;height: 600px;">
+
+			
+		</div>
+
+</body>
+
+<script>
+
+var draw = initDrawing();
+var defs = draw.defs()
+
+var g = draw.group();
+var text = g.text('This is just the start, ')
+
+text.build(true)  // enables build mode
+
+var tspan = text.tspan('something pink in the middle ').fill('#00ff97')
+text.plain('and again boring at the end.')
+
+text.build(false) // disables build mode
+//tspan.animate('2s').fill('#f06')
+
+
+g.move(0,0).move(0,110)//.scale(2).rotate(90);
+//defs.add(g);
+
+//标杆
+//draw.use(g)
+
+//对比1
+//draw.use(g).move(0,100)
+
+//对比2
+//draw.use(g).move(0,200).scale(2)
+
+//对比3
+//draw.use(g).move(0,300).rotate(90)
+
+/**
+ 初始化画布
+*/
+function initDrawing(){
+
+	var drawingId = "drawing";
+	//高版本
+	var draw = SVG().addTo('#'+drawingId).size("100%", "100%");
+
+	// pan and zoom
+	//动态计算 viewbox内部的值
+	let width = $('#' + drawingId).width();
+	let height = $('#' + drawingId).height();
+	draw.viewbox('0 0 '+width+' '+height).panZoom({ zoomMin: 0.5, zoomMax: 20 });
+	
+	return draw;
+}
+
+function createUUID() {
+	var x = 13 * Math.floor(Math.random() * 1000) + "-" + 7 * Math.floor(Math.random() * 100);
+	return "id_" + x;
+}
+/**
+ * 生成随机颜色
+ */
+function getRandomColor() {
+	var x = getRandomInteger();
+	return "#" + x;
+}
+/**
+ * 生成随机数
+ */
+function getRandomInteger() {
+	var x = Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9);
+	return x;
+}
+</script>
+
+</html>
