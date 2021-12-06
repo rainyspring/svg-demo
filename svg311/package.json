@@ -1,5 +1,5 @@
 {
-  "name": "npm2",
+  "name": "svg311",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@svgdotjs/svg.js": "^3.0.16",
-    "@svgdotjs/svg.panzoom.js": "^2.1.1"
+    "@svgdotjs/svg.draggable.js": "^3.0.2",
+    "@svgdotjs/svg.panzoom.js": "^2.1.2"
   }
 }

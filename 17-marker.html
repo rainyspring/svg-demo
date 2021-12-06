@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+
+	<link rel="stylesheet" type="text/css" href="svg270/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="svg270/themes/icon.css">
+	<script type="text/javascript" src="svg270/jquery.min.js"></script>
+	<script type="text/javascript" src="svg270/jquery.easyui.min.js"></script>
+
+
+	<!--高版本-->
+	<script src="svg311/node_modules/@svgdotjs/svg.js/dist/svg.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.panzoom.js/dist/svg.panzoom.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.draggable.js/dist/svg.draggable.js"></script>
+
+	<!-- 低版本 -->
+	<!-- <script src="svg270/svg.min.js"></script>
+	<script src="svg270/svg.panzoom.js"></script>
+	<script src="svg270/svg.draggable.js"></script> -->
+
+</head>
+<style>
+	
+</style>
+
+<!-- 
+
+-->
+
+<body>
+	
+	<div>
+		<div style="">我是一个画布视窗</div>
+	
+		
+		<svg width="120" height="120" viewBox="0 0 120 120"
+			xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+		  <defs>
+			<marker id="Triangle" viewBox="0 0 10 10" refX="1" refY="5"
+				markerWidth="6" markerHeight="10" orient="auto">
+			  <path d="M 0 0 L 10 5 L 0 10 z" />
+			</marker>
+		  </defs>
+
+		  <polyline points="10,90 50,80 90,20 100,100" fill="none" stroke="black"
+			  stroke-width="2" marker-end="url(#Triangle)" marker-mid="url(#Triangle)"/>
+		
+		</svg>
+	</div>
+
+
+
+</body>
+
+<script>
+
+var draw = SVG().addTo('#drawing').size("100%","100%");
+
+
+
+//draw.path("M100 100 H200 V300 L 400 250").css({"fill":"none","stroke":"green","stroke-width":"1mm"});
+draw.path('M 100 200 L 300 100 L 200 300').css({"fill":"none","stroke":"green","stroke-width":"1mm"});
+
+
+function createUUID() {
+	var x = 13 * Math.floor(Math.random() * 1000) + "-" + 7 * Math.floor(Math.random() * 100);
+	return "id_" + x;
+}
+/**
+ * 生成随机颜色
+ */
+function getRandomColor() {
+	var x = getRandomInteger();
+	return "#" + x;
+}
+/**
+ * 生成随机数
+ */
+function getRandomInteger() {
+	var x = Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9);
+	return x;
+}
+</script>
+
+</html>
