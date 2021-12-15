@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+
+<head>
+	<title>Title</title>
+	<!--
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+	-->
+		<!--高版本-->
+	<script src="svg311/node_modules/@svgdotjs/svg.js/dist/svg.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.panzoom.js/dist/svg.panzoom.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.draggable.js/dist/svg.draggable.js"></script>
+	
+</head>
+<body>
+	<div id="drawing"></div>
+
+
+</body>
+<!-- 
+https://svgjs.com/docs/2.7/events/#basic-events
+	-->
+<script >
+var defaultColor = "green";
+var draw = SVG().addTo('#drawing').size(800, 800)
+var rect = draw.rect(100, 100).css({"fill":defaultColor});
+
+
+initEvent(rect);
+
+function initEvent(svgObject){
+	
+	svgObject.on("mousedown",function(e1){
+		svgObject.css({"fill":"red"});
+		svgObject.data("moveingStatus",true)
+	}).on("mouseup",function(e1){
+		svgObject.css({"fill":defaultColor});
+		svgObject.data("moveingStatus",false)
+	})
+	
+	// 虽然这里实现没问题，但实际效果，如果鼠标移动过于灵敏，超出了 svgObject 区域，则会无法移动
+	// svgObject.on("mousemove",function(e2){
+	// 	console.log(e2)
+	// 	var moveingStatus = svgObject.data("moveingStatus")
+	// 	if(moveingStatus){
+	// 		var dx = e2.movementX;
+	// 		var dy = e2.movementY;
+	// 		svgObject.dmove(dx,dy)
+	// 	}
+		
+	// })
+
+	draw.on("mousemove",function(e2){
+		console.log(e2)
+		var moveingStatus = svgObject.data("moveingStatus")
+		if(moveingStatus){
+			var box = svgObject.rbox();
+			var x = e2.x-box.w/2;
+			var y = e2.y-box.h/2;
+
+			svgObject.move(x,y)
+		}
+		
+	})
+}
+
+</script>
+</html>

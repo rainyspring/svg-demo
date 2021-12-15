@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+
+	<link rel="stylesheet" type="text/css" href="svg270/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="svg270/themes/icon.css">
+	<script type="text/javascript" src="svg270/jquery.min.js"></script>
+	<script type="text/javascript" src="svg270/jquery.easyui.min.js"></script>
+
+	<script src="svg311/node_modules/@svgdotjs/svg.js/dist/svg.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.panzoom.js/dist/svg.panzoom.js"></script>
+
+
+</head>
+<style>
+	ul li {
+		margin-bottom: 20px;
+		cursor: pointer;
+	}
+
+	/*高亮效果*/
+	.highlight {
+		stroke: #1470FA;
+	}
+
+	div {
+		margin-top: 10px;
+	}
+</style>
+
+<!-- 
+
+-->
+
+<body>
+	
+	<div>
+		<div style="border-bottom: 1px solid gray;">我是一个画布视窗</div>
+	
+		<div id="drawing" style="border:2px solid green;width: 800px;height: 600px;">
+		</div>
+	</div>
+
+
+
+</body>
+
+<script>
+
+var draw = SVG().addTo('#drawing' ).size("100%", "100%");
+
+// pan and zoom  {zoomFactor:2} 默认 为 2
+let width = $('#drawing' ).width();
+let height = $('#drawing').height();
+draw.viewbox("0 0 " + width + " " + height).panZoom({ panButton: 1, zoomMin: 0.01, zoomMax: 100, zoomFactor: 1 });
+
+
+
+let pointer = draw.group().attr("id","xxx")
+let p = pointer.group().path("M1846.4314424066083 2313.73622338086H1865.4192624066084C1866.2103924066082 2313.73622338086 1866.8577124066082 2313.30720338086 1866.8577124066082 2312.78264338086V2149.38183538086C1866.8577124066082 2148.85738538086 1866.2104024066084 2148.42822538086 1865.4192624066084 2148.42822538086H1846.4314424066083C1845.3166324066083 2148.42822538086 1844.6333624066083 2147.64149538086 1845.1727824066083 2146.9977953808598L1875.8841224066082 2111.76198238086C1876.9989224066082 2110.49844238086 1879.7679924066083 2110.49844238086 1880.8828024066083 2111.76198238086L1911.5581824066082 2146.9977953808598C1912.0976124066083 2147.64149538086 1911.4143324066083 2148.42822538086 1910.2995324066083 2148.42822538086H1891.3117124066084C1890.5205624066084 2148.42822538086 1889.8732524066083 2148.85737538086 1889.8732524066083 2149.38183538086V2312.78264338086C1889.8732524066083 2313.30720338086 1890.5205624066084 2313.73622338086 1891.3117124066084 2313.73622338086H1910.2995324066083C1911.4143324066083 2313.73622338086 1912.0976124066083 2314.52303338086 1911.5581824066082 2315.16673338086L1880.8828024066083 2350.40259338086C1879.7679924066083 2351.66616338086 1876.9989224066082 2351.66616338086 1875.8841224066082 2350.40259338086L1845.2087424066083 2315.16673338086C1844.6333624066083 2314.52303338086 1845.3166124066083 2313.73622338086 1846.4314424066083 2313.73622338086Z ");
+p.css({"fill":"#ffffff","fill-opacity":1,"stroke":"#000000","stroke-width":"1.51181","stroke-miterlimit":4,"stroke-dasharray":"none", "stroke-opacity":1})
+;
+
+//p.move(100,100)
+
+//<g> 旋转可以
+pointer.rotate(90)
+
+
+/**
+ * 加载图例
+ */
+function loadLegendByUrl(url, callback) {
+
+
+	$.post(url, {}, function (data) {
+
+		if ($.isFunction(callback)) {
+			callback(data);
+		}
+	}, "text");
+}
+
+function createUUID() {
+	var x = 13 * Math.floor(Math.random() * 1000) + "-" + 7 * Math.floor(Math.random() * 100);
+	return "id_" + x;
+}
+/**
+ * 生成随机颜色
+ */
+function getRandomColor() {
+	var x = getRandomInteger();
+	return "#" + x;
+}
+/**
+ * 生成随机数
+ */
+function getRandomInteger() {
+	var x = Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9);
+	return x;
+}
+</script>
+
+</html>
