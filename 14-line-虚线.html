@@ -17,10 +17,7 @@
 	<script src="svg311/node_modules/@svgdotjs/svg.panzoom.js/dist/svg.panzoom.js"></script>
 	<script src="svg311/node_modules/@svgdotjs/svg.draggable.js/dist/svg.draggable.js"></script>
 
-	<!-- 低版本 -->
-	<!-- <script src="svg270/svg.min.js"></script>
-	<script src="svg270/svg.panzoom.js"></script>
-	<script src="svg270/svg.draggable.js"></script> -->
+
 
 </head>
 <style>
@@ -33,26 +30,56 @@
 
 <body>
 	
-	<div>
-		<div style="">我是一个画布视窗</div>
-	
-		<div id="drawing" style="border:1px solid green;width: 800px;height: 600px;">
+	<div id="drawing" style="border:2px solid green;width: 800px;height: 600px;">
+
+			
 		</div>
-	</div>
-
-
-
+	
 </body>
 
 <script>
+class Point{
 
-var draw = SVG().addTo('#drawing').size("100%","100%");
+	constructor(x, y) {
+
+        this.x = x;
+        this.y = y;
+    }
+
+}
 
 
+var draw = initDrawing();
+let startP = new Point(10,20);
+let endP = new Point(10,100);
+var line = draw.line(startP.x,startP.y,endP.x,endP.y).css({"stroke-width":1,"stroke":"red"}).addClass("c1")
+line.css({"stroke-dasharray":"5,5"});
 
-//draw.path("M100 100 H200 V300 L 400 250").css({"fill":"none","stroke":"green","stroke-width":"1mm"});
-//draw.path('M 100 200 L 300 100 L 200 300').css({"fill":"none","stroke":"green","stroke-width":"1mm"});
-draw.path('M 100 200 L 300 100').css("fill:none;stroke:#000000;stroke-width:0.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:5,5;stroke-dashoffset:0;stroke-opacity:1");
+//画起点
+draw.circle(1).css({"fill":"green"}).move(startP.x,startP.y);
+
+//通过demo 可知：视觉上，起点是一定会有线与其相连的，但终点不能保证一定有线段相连
+draw.circle(1).css({"fill":"blue"}).move(endP.x,endP.y);
+
+
+/**
+ 初始化画布
+*/
+function initDrawing(){
+	
+	//测试证明 外部的 div 也不能用 数字开头,不然报【 is not a valid selector】
+	var drawingId = "drawing";
+	//高版本
+	var draw = SVG().addTo('#'+drawingId).size("100%", "100%");
+
+	// pan and zoom
+	//动态计算 viewbox内部的值
+	let width = $('#' + drawingId).width();
+	let height = $('#' + drawingId).height();
+	draw.viewbox('0 0 '+width+' '+height).panZoom({ zoomMin: 0.5, zoomMax: 20 });
+	
+	return draw;
+}
 
 function createUUID() {
 	var x = 13 * Math.floor(Math.random() * 1000) + "-" + 7 * Math.floor(Math.random() * 100);

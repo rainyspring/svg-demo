@@ -11,15 +11,10 @@
 	<script type="text/javascript" src="svg270/jquery.min.js"></script>
 	<script type="text/javascript" src="svg270/jquery.easyui.min.js"></script>
 
-
-	<script src="svg270/svg.min.js"></script>
-
-	<script src="svg270/svg.panzoom.js"></script>
-	<script src="svg270/svg.draggable.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="svg270/svg.select.css">
-	<script src="svg270/svg.select.js"></script>
-	<script src="svg270/svg.resize.js"></script>
+<!--高版本-->
+	<script src="svg311/node_modules/@svgdotjs/svg.js/dist/svg.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.panzoom.js/dist/svg.panzoom.js"></script>
+	<script src="svg311/node_modules/@svgdotjs/svg.draggable.js/dist/svg.draggable.js"></script>
 
 </head>
 <style>
@@ -57,26 +52,31 @@
 
 <script>
 
-	var draw = SVG('drawing').size("100%", "100%");
+	//高版本
+	var draw = SVG().addTo('#drawing').size("100%", "100%");
 
 	//有效	且位于  stroke-width 属性内
-	draw.line(0, 20, 100, 20).stroke({ width: "1mm" })
-	
-	//有效，必须同时设置  stroke-width  stroke 才生效，且位于 style 属性内
-	draw.line(0, 50, 100, 50).style({
-		"stroke-width":"1mm",
-		// "stroke":"#f45"
-	})
-	//有效， style 属性比 单独的 stroke-width 优先级高
-	draw.line(0, 70, 100, 70).stroke({ width: "2mm" }).style({"stroke-width":"1mm",
+	let a1 = draw.line(0, 20, 100, 20).css({"stroke-width":"1mm",
 		"stroke":"#f49"
 	})
-	
+
+	console.log("1mm:"+a1.css("stroke-width"))
 	//有效，必须同时设置  stroke-width  stroke 才生效，且位于 style 属性内
-	draw.line(0, 100, 100, 100).style("stroke-width","2mm").style("stroke","#f45")
-
-
-
+	let a2 = draw.line(0, 50, 100, 50).css({
+		"stroke-width":"1",
+		"stroke":"#f45"
+	})
+	console.log("1:"+a2.css("stroke-width"))
+	//有效， style 属性比 单独的 stroke-width 优先级高
+	let a3 = draw.line(0, 70, 100, 70).css({"stroke-width":"1px",
+		"stroke":"#f49"
+	})
+	console.log("1px:"+a3.css("stroke-width"))
+	//有效，必须同时设置  stroke-width  stroke 才生效，且位于 style 属性内
+	let a4 = draw.line(0, 100, 100, 100).css("stroke-width","2mm").css("stroke","#f45")
+	console.log("2mm:"+a4.css("stroke-width"))
+	
+	
 
 
 

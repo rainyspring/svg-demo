@@ -50,21 +50,25 @@ var draw = SVG('drawing');
 
 
 
-//blue
-var r1 = draw.rect(100, 100).dmove(50,50).style({"fill":"#0000FF"});
+
 
 
 //red
-var r2 = draw.rect(100, 100).style({"fill":"#ff0000","stroke-width":"0.5mm"});
+var r1 = draw.rect(100, 100).style({"fill":"red","stroke-width":"0.5mm"});
 
 
 //green
-var r3 = draw.rect(100, 100).dmove(70,20).style({"fill":"#00ff00","stroke-width":"0.5mm"});
+var r2 = draw.rect(100, 100).dmove(70,20).style({"fill":"green","stroke-width":"0.5mm"});
+
+//blue
+var r3 = draw.rect(100, 100).dmove(50,50).style({"fill":"blue"});
+
+//初始状态： blue -> red -> green
 
 //放置最底部
-r3.back();
+//r3.back();
 //放置最上部
-//r1.front();
+r1.front();
 
 /**
  * 加载图例
