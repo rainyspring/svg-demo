@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+<svg width="120" height="120" viewBox="0 0 120 120"
+    xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+  <defs>
+    <marker id="Triangle" viewBox="0 0 10 10" refX="1" refY="5"
+        markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" />
+    </marker>
+  </defs>
+
+  <polyline points="10,90 50,80 90,20" fill="none" stroke="black"
+      stroke-width="2" marker-end="url(#Triangle)" />
+</svg>
+
+<!--
+
+/**
+ * 多边形 
+ * Polygon [ˈpɒlɪɡən] 
+ */
+class Polygon  {
+
+    /**
+     * 以左上角 为起点，顺时针旋转
+     * @rule web端坐标系原点(0,0)为左上角。起点S（以 y 最小,然后 x 最小）为标准。然后顺时针进行排布
+     * @param {Array} points 
+     * @param {Boolean} unOrdered 无序的
+     */
+    constructor(points, unOrdered) {
+ 
+        this._points = points;
+
+        if (unOrdered) {
+            this.sort();
+        }
+
+    }
+
+    /**
+     * 按照多边形端点的排布顺序
+     * @private
+     */
+    sort() {
+       
+        if (this.getPoints().length <= 2) {
+            return;
+        }
+
+        // console.log("before:",this.getPoints());
+        //先找到起点 S（左上角点）
+        this.getPoints().sort(function (a, b) {
+            if (a.y != b.y) {
+                return a.y - b.y;
+            } 
+
+            return a.x - b.x;
+        });
+
+        // console.log("sorted-1:",this.getPoints());
+        
+        let S = this.getPoints()[0];
+
+        //然后找到起点对角点T（以 y 最大,然后 x 最大）
+        let length = this.getPoints().length;
+        let T = this.getPoints()[length - 1];
+       
+	   console.log(S,T)
+
+        /**
+         * 首先：从 S -> T ，将上面的点按照 x 从小到大排布
+         * 其次：从 T -> S ，将下面的点按照 x 从大到小排布
+         * 
+         */
+        /**
+         * 如果 线段 ST 是垂直 x 轴，那么直接用 x 坐标就能排布
+         * 方法(保证是顺时针)： S.x 右侧 从小到大，S.x 左侧 从大到小
+         */
+        let rightArray = [S];
+        let leftArray = [T];
+        if (S.x == T.x) {
+
+            for (let i = 1; i < length - 1; i++) {
+                let p = this.getPoints()[i];
+                if (p.x >= S.x) {
+                    rightArray.push(p);
+                } else {
+                    leftArray.push(p);
+                }
+            }
+
+
+        } else {
+
+            // 进入这里，线段 ST 一定具备斜率，且是起点为左上角，终点是右下角的斜线段
+            let k1 = (T.y - S.y) / (T.x - S.x);
+            //坐标系 x轴向右 为正，y轴向下为正
+            if(k1>=0){
+                // 反斜杠样式(\)
+				
+                 // let Fxy = k1 * (S.x - x) + y - S.y;
+				// S -> T 上面的点 应该满足  f(x0,y0)<=0
+				// T -> S 下面的点 应该满足  f(x0,y0)>0
+				for (let i = 1; i < length - 1; i++) {
+					let p = this.getPoints()[i];
+					let f_xy = k1 * (S.x - p.x) + p.y - S.y;
+					if (f_xy<=0) {
+						rightArray.push(p);
+					} else {
+						leftArray.push(p);
+					}
+				}
+            }else{
+                // 正斜杠样式(/)
+				 // let Fxy = k1 * (S.x - x) + y - S.y;
+				// S -> T 上面的点 应该满足  f(x0,y0)>=0
+				// T -> S 下面的点 应该满足  f(x0,y0)<0
+				for (let i = 1; i < length - 1; i++) {
+					let p = this.getPoints()[i];
+					let f_xy = k1 * (S.x - p.x) + p.y - S.y;
+					if (f_xy>=0) {
+						rightArray.push(p);
+					} else {
+						leftArray.push(p);
+					}
+				}
+            }
+           
+        }
+
+
+        //从小到大排序
+        rightArray.sort(function (a, b) {
+            if (a.y != b.y) {
+                return a.y - b.y;
+            }
+
+            return a.x - b.x;
+        });
+        // // 从大到小排序
+        leftArray.sort(function (a, b) {
+            if (a.y != b.y) {
+                return b.y - a.y;
+            }
+
+            return b.x - a.x;
+        });
+        
+        this._points = rightArray.concat(leftArray);
+        // console.log("sorted-2:",this.getPoints());
+    }
+
+    /**
+     * @override
+     * @public
+     * @returns Points
+     */
+    getPoints() {
+        return this._points;
+    }
+
+    /**
+     * 从起点开始，按点的排布依次生成 line
+     * @public
+     */
+    getLines() {
+        let lines = [];
+        let length = this.getPoints().length;
+        for (let i = 0; i < length; i++) {
+            let startPoint = this.getPoints()[i];
+            let endPoint = this.getPoints()[i + 1];
+
+            let line = new Line(startPoint, endPoint);
+
+            // 最后一根line 的终点就是起点
+            if(i==length-1){
+                line.end = this.getPoints()[0];
+            }
+            lines.push(line);
+        }
+        
+
+        // console.log("lines>>",lines);
+        return lines;
+    }
+
+    /**
+     * @override
+     * @public
+     * @returns Polygon
+     */
+    clone() {
+        if (!this._points || this._points.length <= 0) {
+            return null;
+        }
+        let arr = [];
+        this._points.forEach(function (p) {
+            arr.push(p.clone());
+        });
+        return new Polygon(arr);
+    }
+}
+class Point2D{
+	constructor(x, y) {
+		this.x = x;
+        this.y = y;
+	}
+
+}
+
+class SVGUtil{
+
+    /**
+     * 查看 point
+     * 专用于测试时，查看点的位置
+     * @auther jx
+     * @param {}} point 
+     */
+    static viewPoint(draw, point, color, diameter) {
+        if (!point) {
+            return null;
+        }
+        if (!diameter) {
+            diameter = 1;
+        }
+        if (!color) {
+            color = "#9E2BF4";
+        }
+        let c = draw.circle(diameter).center(point.x, point.y);
+        if (color) {
+            c.css({ "fill": color });
+        }
+
+        return c;
+    }
+    /**
+     * 查看 points
+     * 专用于测试时，查看点的位置
+     * 绘制的点，会逐渐变大，依据此可以看出点的方向
+     * @auther jx
+     * @param {} point s
+     */
+    static viewPoints(draw, points, color, diameter) {
+        // console.log("points>>",points)
+        if (points instanceof Set) {
+            points = [...points];
+        }
+
+        let arr = [];
+        for (let i = 0; i < points.length; i++) {
+
+            let diameter = 1 + i * 0.5;
+            let c = SVGUtil.viewPoint(draw, points[i], color, diameter)
+            arr.push(c);
+        }
+
+        return arr;
+    }
+}
+
+var draw = initDrawing();
+//let points = [new Point2D(0,0),new Point2D(10,10),new Point2D(5,0),new Point2D(5,10)];
+let points = [new Point2D(0,0),new Point2D(5,0),new Point2D(-5,5),new Point2D(0,5)];
+
+let p = new Polygon(points,true);
+console.log(p.getPoints());
+SVGUtil.viewPoints(draw,p.getPoints())
+
+
+/**
+ 初始化画布
+*/
+function initDrawing(){
+	
+	//测试证明 外部的 div 也不能用 数字开头,不然报【 is not a valid selector】
+	var drawingId = "drawing";
+	//高版本
+	var draw = SVG().addTo('#'+drawingId).size("100%", "100%");
+
+	// pan and zoom
+	//动态计算 viewbox内部的值
+	let width = $('#' + drawingId).width();
+	let height = $('#' + drawingId).height();
+	draw.viewbox('0 0 '+width+' '+height).panZoom({ zoomMin: 0.5, zoomMax: 20 });
+	
+	return draw;
+}
+
+function createUUID() {
+	var x = 13 * Math.floor(Math.random() * 1000) + "-" + 7 * Math.floor(Math.random() * 100);
+	return "id_" + x;
+}
+/**
+ * 生成随机颜色
+ */
+function getRandomColor() {
+	var x = getRandomInteger();
+	return "#" + x;
+}
+/**
+ * 生成随机数
+ */
+function getRandomInteger() {
+	var x = Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9) + "" + Math.floor(Math.random() * 9);
+	return x;
+}
+</script>
+
+</html>
